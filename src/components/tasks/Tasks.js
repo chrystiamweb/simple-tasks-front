@@ -5,7 +5,7 @@ import List from './list/List';
 
 class Tasks extends Component {
 
-   constructor(props) {
+   constructor(props){
       super(props);
       this.state = {
          tasks: []
@@ -13,26 +13,26 @@ class Tasks extends Component {
       this.loadTasks = this.loadTasks.bind(this);
    }
 
-   async loadTasks() {
+   async loadTasks(){
       let response = await fetch('http://localhost:3001/tasks');
       const tasks = await response.json();
       this.setState({ tasks: tasks });
    }
 
-   componentDidMount() {
+   componentDidMount(){
       this.loadTasks();
    }
       
-   render() {
+   render(){
       return (
          <Row>
          <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
             <p className="title">To-do</p>
-            <List tasks={this.state.tasks.filter((task) => task.done != true)}/>
+            <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done != true)}/>
          </Col>
          <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
             <p className="title">Done</p>
-            <List tasks={this.state.tasks.filter((task) => task.done != false)}/>
+            <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done != false)}/>
          </Col>
          </Row>
       );
